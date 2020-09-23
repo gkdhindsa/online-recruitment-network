@@ -4,15 +4,21 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 
+
 DEVELOPMENT_ENV  = True
+
 
 app = Flask(__name__)
 
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
 
 app.config['SECRET_KEY'] = 'testkey'
 
+
 db = SQLAlchemy(app)
+
 
 class User(db.Model):
    username = db.Column(db.String(100), primary_key=True)
@@ -21,11 +27,13 @@ class User(db.Model):
    usertype = db.Column(db.String(100), nullable=False)
    userdata = db.relationship('Company', backref='user', lazy=True)
 
+
 def __repr__(self, username, password, usertype, name):
    self.username = username
    self.password = password
    self.usertype = usertype
    self.name = name
+
 
 class Company(db.Model):
 	company_id = db.Column(db.Integer(), primary_key=True)
@@ -34,11 +42,16 @@ class Company(db.Model):
 	company_vacancies = db.Column(db.Integer())
 	company_type =  db.Column(db.String(100), nullable=False)
 	username = db.Column(db.String(100), db.ForeignKey('user.username'), nullable=False)
+	posts = db.relationship('Posts', backref='Company', lazy=True)
 
-   
+
+class Post(db.Model):
+	company_id = db.Column(db.Integer(), db.ForeignKey('company.company_id'), nullable=False, primary_key=True)
+	Post_Details = db.Column(db.Text(), primary_key=True)
 
 
 db.create_all() 
+
 
 app_data = {
     "name":         "Recruitment",
@@ -112,7 +125,6 @@ def login():
 		return render_template('login.html', app_data=app_data)
 
 
-
 @app.route('/account', methods=['POST', 'GET'])
 def account():
 	if 'user' in session:
@@ -120,11 +132,13 @@ def account():
 	else:
 		return redirect(url_for('login'))
 
+
 @app.route('/logout')
 def logout():
 	if 'user' in session:
 		session.pop('user', None)
 	return redirect(url_for('home'))
+
 
 @app.route('/about')
 def about():
