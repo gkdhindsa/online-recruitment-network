@@ -14,13 +14,13 @@
     	</div>
     	<form method="post" action="{{ url_for('signup') }}" class="form-group col-12 col-md-6  py-5 px-4 mx-auto rounded-lg shadow-lg">
     		<label class="font-weight-bold m-1">Username</label>
-    		<input type="text" class="form-control" name="username" placeholder="Username">
+    		<input type="text" class="form-control" name="username" placeholder="Username" required>
 
             <label class="font-weight-bold m-1">Name</label>
-            <input type="text" class="form-control" name="name" placeholder="Name">
+            <input type="text" class="form-control" name="name" placeholder="Name" required>
 
             <div class="my-2">
-                <label class="font-weight-bold m-1">Account Type</label><br>
+                <label class="font-weight-bold m-1" >Account Type</label><br>
                 <div class="form-check-inline">
                   <label class="form-check-label">
                     <input type="radio" class="form-check-input" name="usertype" value="company">Company
@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-check-inline">
                   <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="usertype" value="user">User
+                    <input type="radio" class="form-check-input" name="usertype" value="user" required>User
                   </label>
                 </div>    
             </div>
@@ -36,7 +36,7 @@
 
 
     		<label class="font-weight-bold m-1">Password</label>
-    		<input type="password" class="form-control" name="password" placeholder="Password">
+    		<input type="password" class="form-control" name="password" placeholder="Password" required>
 
     		<div class="text-center mt-4">
     			<button type="submit" class="btn btn-primary">Sign Up</button>	
